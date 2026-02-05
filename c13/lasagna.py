@@ -1,7 +1,9 @@
 # ============================================================
 # TAREA 1: Definir tiempo de horneado esperado como constante
 # ============================================================
-
+"""
+prueba
+"""
 # TODO: Define la constante EXPECTED_BAKE_TIME que representa
 # cuántos minutos debe hornear la lasagna en el horno.
 # Según tu libro de cocina, la lasagna debe estar 40 minutos en el horno.
@@ -9,7 +11,7 @@
 # Recuerda: Las constantes se escriben en MAYÚSCULAS (SCREAMING_SNAKE_CASE)
 # Ejemplo: MI_CONSTANTE = 100
 
-
+EXPECTED_BAKE_TIME = 40
 
 # ============================================================
 # TAREA 2: Calcular tiempo de horneado restante en minutos
@@ -26,6 +28,13 @@
 # Pista: resta elapsed_bake_time de EXPECTED_BAKE_TIME
 
 def bake_time_remaining(elapsed_bake_time):
+    """
+    calcula cuantos minutos le faltan a la lasagna 
+    :param elapsed_bake_time: int - minutos que ya ha estado en el horno
+    :return: int - cuantos minutos faltan
+    """
+    tiempo_restante = EXPECTED_BAKE_TIME - elapsed_bake_time
+    return tiempo_restante
     pass
 
 
@@ -43,7 +52,15 @@ def bake_time_remaining(elapsed_bake_time):
 # 4
 #
 # Pista: multiplica number_of_layers por 2
-
+def preparation_time_in_minutes(number_of_layers):
+    """
+    Docstring for preparation_time_in_minutes
+    
+    :param number_of_layers: Description
+    """
+    MINUTOS_POR_CAPA = 2
+    tiempo_preparacion = number_of_layers * MINUTOS_POR_CAPA
+    return tiempo_preparacion
 
 
 # ============================================================
@@ -64,6 +81,18 @@ def bake_time_remaining(elapsed_bake_time):
 # Pista: suma el tiempo de preparación (usa la función anterior)
 #        con el tiempo de horneado transcurrido
 
+def elapsed_time_in_minutes(number_of_layers, elapsed_bake_time):
+    """
+    Docstring for elapsed_time_in_minutes
+    
+    :param number_of_layers: Description
+    :param elapsed_bake_time: Description
+    """
+    tiempo_preparacion = preparation_time_in_minutes(number_of_layers)
+
+    tiempo_total = tiempo_preparacion + elapsed_bake_time
+
+    return tiempo_total
 
 
 # ============================================================
