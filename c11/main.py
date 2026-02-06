@@ -1,7 +1,3 @@
-# main.py
-# Programa principal - Menú interactivo del sistema de tareas
-
-# "Importar TODAS las funciones que creamos en tareas.py"
 from tareas import (
     agregar_tarea,
     buscar_tareas,
@@ -10,155 +6,159 @@ from tareas import (
     porcentaje_completadas,
     tareas_por_categoria,
     generar_reporte,
-    tareas_urgentes
+    tareas_urgentes,
+    guardar_tareas,
+    cargar_tareas
 )
-
-# "Importar los datos de prueba para no empezar vacíos"
-from datos_prueba import tareas_ejemplo
 
 
 def mostrar_menu():
-    """Muestra el menú de opciones al usuario."""
     print("\n" + "="*50)
-    print("   SISTEMA DE GESTIÓN DE TAREAS")
+    print("SISTEMA DE GESTIÓN DE TAREAS")
     print("="*50)
     print("1. Ver todas las tareas")
     print("2. Agregar nueva tarea")
     print("3. Marcar tarea como completada")
-    print("4. Buscar tareas (filtros)")
+    print("4. Buscar tareas")
     print("5. Ver estadísticas")
-    print("6. Generar reporte")
+    print("6. Generar reporte completo")
     print("7. Ver tareas urgentes")
     print("0. Salir")
     print("="*50)
 
 
 def main():
-    """Función principal del programa."""
+    archivo = "tareas.json"
+    tareas = cargar_tareas(archivo)
     
-    # "Crear copia de los datos de prueba"
-    # "IMPORTANTE: .copy() para no modificar el original"
-    tareas = tareas_ejemplo.copy()
+    if not tareas:
+        print("Primera vez - cargando datos de ejemplo...")
+        from datos_prueba import tareas_ejemplo
+        tareas = tareas_ejemplo.copy()
+        guardar_tareas(tareas, archivo)
     
-    print("\n¡Bienvenido al Sistema de Gestión de Tareas!")
+    print(f"\n{'='*50}")
+    print(f"Bienvenido! Tienes {len(tareas)} tareas guardadas.")
+    print(f"{'='*50}\n")
     
-    # "Loop infinito - solo salimos con break cuando eligen 0"
     while True:
         mostrar_menu()
-        opcion = input("\nSeleccione opción: ")
+        opcion = input("\nSeleccione opción: ").strip()
         
-        # OPCIÓN 0: SALIR
         if opcion == "0":
-            print("\n¡Hasta luego!")
+            guardar_tareas(tareas, archivo)
+            print("\n✓ Tareas guardadas!")
+            print("Hasta luego.\n")
             break
         
-        # OPCIÓN 1: VER TODAS LAS TAREAS
         elif opcion == "1":
-            print("\n📋 TODAS LAS TAREAS:")
-            print("-" * 50)
-            
+            print(f"\n{'='*50}")
+            print("TODAS LAS TAREAS")
+            print(f"{'='*50}")
             if not tareas:
-                print("No hay tareas registradas")
+                print("No hay tareas.")
             else:
-                for t in tareas:
-                    # "Operador ternario para el emoji"
-                    estado = "✓" if t["completada"] else "○"
-                    print(f"{estado} [{t['id']}] {t['titulo']} - {t['prioridad']}")
+                for tarea in tareas:
+                    completada = "✓" if tarea["completada"] else "✗"
+                    print(f"[{completada}] {tarea['id']}. {tarea['titulo']} "
+                          f"({tarea['prioridad']}) - {tarea['categoria']}")
+            print()
         
-        # OPCIÓN 2: AGREGAR NUEVA TAREA
         elif opcion == "2":
-            print("\n➕ AGREGAR NUEVA TAREA:")
+            print(f"\n{'='*50}")
+            print("AGREGAR NUEVA TAREA")
+            print(f"{'='*50}")
             
-            titulo = input("Título: ")
-            descripcion = input("Descripción (Enter para omitir): ")
-            prioridad = input("Prioridad (alta/media/baja, Enter=media): ") or "media"
-            categoria = input("Categoría (Enter=general): ") or "general"
+            titulo = input("Título: ").strip()
+            prioridad = input("Prioridad (alta/media/baja): ").strip().lower()
+            categoria = input("Categoría: ").strip()
             
-            # "Llamar nuestra función agregar_tarea()"
-            nueva = agregar_tarea(tareas, titulo, descripcion, prioridad, categoria)
-            print(f"\n✓ Tarea '{nueva['titulo']}' creada con ID {nueva['id']}")
-        
-        # OPCIÓN 3: MARCAR COMO COMPLETADA
-        elif opcion == "3":
-            print("\n✓ MARCAR TAREA COMO COMPLETADA:")
-            try:
-                tarea_id = int(input("ID de la tarea: "))
-                
-                if marcar_completada(tareas, tarea_id):
-                    print("✓ Tarea marcada como completada")
-                else:
-                    print("✗ No se encontró tarea con ese ID")
-            except ValueError:
-                print("✗ Error: ingrese un número válido")
-        
-        # OPCIÓN 4: BUSCAR CON FILTROS
-        elif opcion == "4":
-            print("\n🔍 BUSCAR TAREAS:")
-            print("1. Por prioridad")
-            print("2. Por categoría")
-            print("3. Solo pendientes")
+            nueva_tarea = agregar_tarea(tareas, titulo, prioridad, categoria)
             
-            filtro = input("Seleccione: ")
-            
-            if filtro == "1":
-                prio = input("Prioridad (alta/media/baja): ")
-                resultados = buscar_tareas(tareas, prioridad=prio)
-            elif filtro == "2":
-                cat = input("Categoría: ")
-                resultados = buscar_tareas(tareas, categoria=cat)
-            elif filtro == "3":
-                resultados = buscar_tareas(tareas, completada=False)
+            if nueva_tarea:
+                print(f"\n✓ Tarea '{titulo}' agregada con ID {nueva_tarea['id']}")
+                guardar_tareas(tareas, archivo)
             else:
-                resultados = []
-            
-            print(f"\nSe encontraron {len(resultados)} tareas:")
-            for t in resultados:
-                estado = "✓" if t["completada"] else "○"
-                print(f"{estado} {t['titulo']} - {t['categoria']}")
+                print("\n✗ Error al agregar tarea")
+            print()
         
-        # OPCIÓN 5: ESTADÍSTICAS
+        elif opcion == "3":
+            print(f"\n{'='*50}")
+            print("MARCAR TAREA COMO COMPLETADA")
+            print(f"{'='*50}")
+            
+            try:
+                id_tarea = int(input("ID de la tarea: ").strip())
+                
+                if marcar_completada(tareas, id_tarea):
+                    print(f"\n✓ Tarea {id_tarea} marcada como completada")
+                    guardar_tareas(tareas, archivo)
+                else:
+                    print(f"\n✗ No se encontró tarea con ID {id_tarea}")
+            except ValueError:
+                print("\n✗ ID inválido. Debe ser un número.")
+            print()
+        
+        elif opcion == "4":
+            print(f"\n{'='*50}")
+            print("BUSCAR TAREAS")
+            print(f"{'='*50}")
+            
+            palabra = input("Palabra a buscar: ").strip()
+            resultados = buscar_tareas(tareas, palabra)
+            
+            if resultados:
+                print(f"\n✓ Se encontraron {len(resultados)} tareas:")
+                for tarea in resultados:
+                    print(f"  - {tarea['id']}. {tarea['titulo']}")
+            else:
+                print(f"\n✗ No se encontraron tareas con '{palabra}'")
+            print()
+        
         elif opcion == "5":
-            print("\n📊 ESTADÍSTICAS:")
-            print("-" * 50)
+            print(f"\n{'='*50}")
+            print("ESTADÍSTICAS")
+            print(f"{'='*50}")
             
-            conteo = total_por_prioridad(tareas)
-            print(f"Alta prioridad: {conteo['alta']}")
-            print(f"Media prioridad: {conteo['media']}")
-            print(f"Baja prioridad: {conteo['baja']}")
-            print(f"\nCompletadas: {porcentaje_completadas(tareas)}%")
+            totales = total_por_prioridad(tareas)
+            print("\nTareas por prioridad:")
+            for prioridad, cantidad in totales.items():
+                print(f"  {prioridad}: {cantidad}")
             
-            print("\nPor categoría:")
-            agrupadas = tareas_por_categoria(tareas)
-            for cat, lista in agrupadas.items():
-                print(f"  {cat}: {len(lista)} tareas")
+            porcentaje = porcentaje_completadas(tareas)
+            print(f"\nCompletadas: {porcentaje:.1f}%")
+            
+            por_cat = tareas_por_categoria(tareas)
+            print("\nTareas por categoría:")
+            for cat, cantidad in por_cat.items():
+                print(f"  {cat}: {cantidad}")
+            print()
         
-        # OPCIÓN 6: GENERAR REPORTE
         elif opcion == "6":
-            print("\n📄 REPORTE:")
-            print("-" * 50)
+            print(f"\n{'='*50}")
+            print("REPORTE COMPLETO")
+            print(f"{'='*50}\n")
             
-            reporte = generar_reporte(tareas, mostrar_prioridad=True)
+            reporte = generar_reporte(tareas)
             print(reporte)
         
-        # OPCIÓN 7: TAREAS URGENTES
         elif opcion == "7":
-            print("\n⚠️  TAREAS URGENTES:")
-            print("-" * 50)
+            print(f"\n{'='*50}")
+            print("TAREAS URGENTES")
+            print(f"{'='*50}")
             
             urgentes = tareas_urgentes(tareas)
-            
             if urgentes:
-                for linea in urgentes:
-                    print(linea)
+                print(f"\n✓ Tienes {len(urgentes)} tareas urgentes:")
+                for tarea in urgentes:
+                    print(f"  - {tarea['id']}. {tarea['titulo']} ({tarea['categoria']})")
             else:
-                print("✓ No hay tareas urgentes pendientes")
+                print("\n✓ No tienes tareas urgentes")
+            print()
         
-        # OPCIÓN INVÁLIDA
         else:
-            print("\n✗ Opción inválida. Intente de nuevo.")
+            print("\n✗ Opción inválida. Intente de nuevo.\n")
 
 
-# "Patrón estándar en Python"
-# "Solo ejecuta main() si este es el archivo principal"
 if __name__ == "__main__":
     main()

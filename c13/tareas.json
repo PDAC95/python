@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "titulo": "Completar informe mensual",
+    "descripcion": "Reporte de ventas y m\u00e9tricas del equipo",
+    "prioridad": "alta",
+    "categoria": "trabajo",
+    "completada": false,
+    "fecha_creacion": "2025-01-28"
+  },
+  {
+    "id": 2,
+    "titulo": "Comprar despensa",
+    "descripcion": "Leche, pan, huevos, frutas",
+    "prioridad": "media",
+    "categoria": "hogar",
+    "completada": false,
+    "fecha_creacion": "2025-01-29"
+  },
+  {
+    "id": 3,
+    "titulo": "Estudiar para examen Python",
+    "descripcion": "Repasar funciones, clases y m\u00f3dulos",
+    "prioridad": "alta",
+    "categoria": "estudio",
+    "completada": true,
+    "fecha_creacion": "2025-01-25"
+  },
+  {
+    "id": 4,
+    "titulo": "Hacer ejercicio",
+    "descripcion": "Gimnasio o correr 30 minutos",
+    "prioridad": "media",
+    "categoria": "personal",
+    "completada": false,
+    "fecha_creacion": "2025-01-30"
+  },
+  {
+    "id": 5,
+    "titulo": "Llamar al cliente",
+    "descripcion": "Seguimiento del proyecto",
+    "prioridad": "alta",
+    "categoria": "trabajo",
+    "completada": false,
+    "fecha_creacion": "2025-01-30"
+  },
+  {
+    "id": 6,
+    "titulo": "Lavar el coche",
+    "descripcion": "",
+    "prioridad": "baja",
+    "categoria": "hogar",
+    "completada": true,
+    "fecha_creacion": "2025-01-27"
+  },
+  {
+    "id": 7,
+    "titulo": "Preparar presentaci\u00f3n",
+    "descripcion": "Slides para reuni\u00f3n del viernes",
+    "prioridad": "media",
+    "categoria": "trabajo",
+    "completada": false,
+    "fecha_creacion": "2025-01-29"
+  },
+  {
+    "id": 8,
+    "titulo": "prueba de persistencia",
+    "descripcion": "alta",
+    "prioridad": "media",
+    "categoria": "general",
+    "completada": true,
+    "fecha_creacion": "2026-02-04"
+  }
+]

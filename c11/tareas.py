@@ -2,6 +2,8 @@
 # Sistema de Gestión de Tareas - Clase 11
 
 from datetime import date
+import json 
+import os 
 
 
 def agregar_tarea(tareas, titulo, descripcion="", prioridad="media", categoria="general"):
@@ -207,3 +209,13 @@ def tareas_urgentes(tareas, dias=7):
     ))
     
     return formateadas
+
+def guardar_tareas(tareas, archivo='tareas.json'):
+        with open(archivo, 'w') as f:
+            json.dump(tareas,f, indent=2)
+
+def cargar_tareas(archivo='tareas.json'):
+        if os.path.exists(archivo):
+            with open(archivo, 'r') as f:
+                return json.load(f)
+        return []
