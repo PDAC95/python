@@ -25,7 +25,7 @@ estudiantes = [
 
 # TODO: Define una constante NOTA_MINIMA con valor 70
 
-
+NOTA_MINIMA = 70
 # ============================================================
 # TAREA 2: Crear la función evaluar_estudiantes
 # ============================================================
@@ -41,6 +41,18 @@ estudiantes = [
 #   - Si no, agrega el nombre a reprobados
 #   - Retorna ambas listas
 
+def evaluar_estudiantes(lista_estudiantes):
+    aprobados=[]
+    reprobados = []
+
+    for estudiante in lista_estudiantes:
+        if estudiante["nota"] >= NOTA_MINIMA:
+            aprobados.append(estudiante ["nombre"])
+        else:
+            reprobados.append(estudiante["nombre"])
+
+    return aprobados, reprobados
+
 
 # ============================================================
 # TAREA 3: Llamar la función e imprimir resultados
@@ -54,7 +66,10 @@ estudiantes = [
 #
 # PISTA: Para unir una lista con comas usa: ", ".join(lista)
 
-
+aprobados, reprobados = evaluar_estudiantes(estudiantes)
+#["ana", "maria", "sofia"] => "Ana, Maria, Sofia"
+print(f"Aprobados: {', '.join(aprobados)}")
+print(f"Reprobados: {','.join(reprobados)}")
 # ============================================================
 # PRUEBAS (No modificar - solo ejecutar)
 # ============================================================
