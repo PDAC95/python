@@ -1,4 +1,3 @@
-
 from validadores import es_par, es_positivo, es_adulto, es_email_valido
 
 
