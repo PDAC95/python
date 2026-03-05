@@ -1,88 +1,85 @@
 """
-Clase 20 - Herencia: EJERCICIO 1 — Template para alumnos
-=========================================================
-Archivo: ejercicio1_template.py
+Clase 20 - Herencia: Solución Ejercicio 1 — Vehículos
+======================================================
+Archivo: vehiculos.py
 
-Instrucciones:
-- Completa las clases siguiendo los comentarios # TODO:
-- Vehiculo es la clase PADRE
-- Coche y Moto son clases HIJAS que heredan de Vehiculo
-- Usa super().__init__() para llamar al constructor del padre
+Contenido:
+- Clase padre Vehiculo con marca, modelo, año y encender()
+- Clase hija Coche con puertas y abrir_puerta()
+- Clase hija Moto con cilindrada y hacer_caballito()
+
+Corresponde al slide 11 de la presentación.
 """
 
 
 # ============================================================
-# Clase padre: Vehiculo
+# Clase padre
 # ============================================================
 
 class Vehiculo:
     def __init__(self, marca, modelo, año):
-        # TODO: Guardar marca, modelo y año como atributos
-        pass
+        self.marca = marca
+        self.modelo = modelo
+        self.año = año
 
     def encender(self):
-        # TODO: Imprimir "El [marca] [modelo] está encendido"
-        pass
+        print(f"El {self.marca} {self.modelo} está encendido")
 
 
 # ============================================================
-# Clase hija: Coche
-# Hereda de Vehiculo y agrega: puertas
+# Clases hijas
 # ============================================================
 
-class Coche:  # TODO: Agregar la herencia de Vehiculo
+class Coche(Vehiculo):
     def __init__(self, marca, modelo, año, puertas):
-        # TODO: Llamar al __init__ del padre con super()
-        # TODO: Guardar puertas como atributo propio
-        pass
+        super().__init__(marca, modelo, año)
+        self.puertas = puertas
 
     def abrir_puerta(self):
-        # TODO: Imprimir "Abriendo puerta del [marca]"
-        pass
+        print(f"Abriendo puerta del {self.marca}")
 
 
-# ============================================================
-# Clase hija: Moto
-# Hereda de Vehiculo y agrega: cilindrada
-# ============================================================
-
-class Moto:  # TODO: Agregar la herencia de Vehiculo
+class Moto(Vehiculo):
     def __init__(self, marca, modelo, año, cilindrada):
-        # TODO: Llamar al __init__ del padre con super()
-        # TODO: Guardar cilindrada como atributo propio
-        pass
+        super().__init__(marca, modelo, año)
+        self.cilindrada = cilindrada
 
     def hacer_caballito(self):
-        # TODO: Imprimir "¡[marca] haciendo caballito!"
-        pass
+        print(f"¡{self.marca} haciendo caballito!")
 
 
 # ============================================================
-# Pruebas — NO modificar esta sección
-# Si tu código es correcto, esto debería funcionar sin errores
+# Pruebas
 # ============================================================
 
 if __name__ == "__main__":
 
-    print("Probando Coche...")
+    print("=" * 50)
+    print("Ejercicio 1 — Jerarquía de Vehículos")
+    print("=" * 50)
+
     mi_coche = Coche("Toyota", "Corolla", 2022, 4)
-    mi_coche.encender()       # El Toyota Corolla está encendido
-    mi_coche.abrir_puerta()   # Abriendo puerta del Toyota
-    print(f"Puertas: {mi_coche.puertas}")  # 4
-
-    print()
-
-    print("Probando Moto...")
     mi_moto = Moto("Honda", "CBR", 2021, 600)
-    mi_moto.encender()          # El Honda CBR está encendido
-    mi_moto.hacer_caballito()   # ¡Honda haciendo caballito!
-    print(f"Cilindrada: {mi_moto.cilindrada}cc")  # 600cc
+
+    # Métodos heredados
+    mi_coche.encender()       # El Toyota Corolla está encendido
+    mi_moto.encender()        # El Honda CBR está encendido
 
     print()
 
-    print("Verificando herencia...")
-    print(f"Coche es Vehiculo: {isinstance(mi_coche, Vehiculo)}")  # True
-    print(f"Moto es Vehiculo: {isinstance(mi_moto, Vehiculo)}")    # True
+    # Métodos propios
+    mi_coche.abrir_puerta()   # Abriendo puerta del Toyota
+    mi_moto.hacer_caballito() # ¡Honda haciendo caballito!
 
     print()
-    print("¡Todo correcto!" if isinstance(mi_coche, Vehiculo) else "Revisa la herencia")
+
+    # Verificar atributos
+    print(f"Coche: {mi_coche.marca} {mi_coche.modelo} ({mi_coche.año}) - {mi_coche.puertas} puertas")
+    print(f"Moto: {mi_moto.marca} {mi_moto.modelo} ({mi_moto.año}) - {mi_moto.cilindrada}cc")
+
+    print()
+
+    # isinstance
+    print(f"mi_coche es Vehiculo: {isinstance(mi_coche, Vehiculo)}")  # True
+    print(f"mi_moto es Vehiculo: {isinstance(mi_moto, Vehiculo)}")    # True
+    print(f"mi_coche es Moto: {isinstance(mi_coche, Moto)}")          # False

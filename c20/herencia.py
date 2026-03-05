@@ -18,6 +18,13 @@ class Estudiante(Persona):
         self.carrera = carrera
         self.materias = []
 
+    def presentarse(self):
+        super().saludar()
+        print(f"continuacion saludo.")
+
+    def saludar(self):
+        print(f"Hola! mi nombre es:{self.nombre} y estudio {self.carrera}.")
+
     def estudiar(self, materia):
         print(f"Inscrito en {materia}.")
 
@@ -30,6 +37,9 @@ class Profesor(Persona):
         super().__init__(nombre, edad)
         self.departamento = departamento
         self.cursos = []
+
+    def saludar(self):
+        print(f"Hola! mi nombre es:{self.nombre} y trabajo en el departamento de {self.departamento}.")
 
     def enseñar(self, curso):
         print(f"[{self.nombre} esta ensenando {curso}.")
@@ -49,6 +59,7 @@ carlos.saludar()
 #metodos propios
 ana.estudiar("Programación")
 carlos.enseñar("Álgebra")
+ana.presentarse()
 
 ana.cumplir_anios()
 
