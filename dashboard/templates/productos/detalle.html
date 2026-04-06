@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ producto.nombre }} - Dashboard E-commerce{% endblock %}
+
+{% block content %}
+<h1>{{ producto.nombre }}</h1>
+<div class="card">
+    <p class="price">${{ producto.precio }}</p>
+    <p class="category">Categoría: {{ producto.categoria }}</p>
+    <a href="{% url 'productos:lista' %}">← Volver a productos</a>
+</div>
+{% endblock %}

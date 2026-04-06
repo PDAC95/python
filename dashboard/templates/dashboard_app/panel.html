@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - E-commerce{% endblock %}
+
+{% block content %}
+<h1>Dashboard E-commerce</h1>
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="number">5</div>
+        <div class="label">Total productos</div>
+    </div>
+    <div class="stat-card">
+        <div class="number">${{ total_ventas|default:"335,000" }}</div>
+        <div class="label">Total ventas</div>
+    </div>
+</div>
+
+<h2>Acciones rápidas</h2>
+<div class="card">
+    <a href="{% url 'dashboard_app:ventas' %}">Ver Ventas</a> |
+    <a href="{% url 'productos:lista' %}">Ver Productos</a>
+</div>
+{% endblock %}

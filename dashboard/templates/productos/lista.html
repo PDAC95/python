@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Productos - Dashboard E-commerce{% endblock %}
+
+{% block content %}
+<h1>Nuestros Productos</h1>
+<p>
+    Ordenar:
+    <a href="?orden=nombre">Nombre</a> |
+    <a href="?orden=precio">Precio ↑</a> |
+    <a href="?orden=precio&dir=desc">Precio ↓</a>
+</p>
+
+<div class="product-grid">
+{% for producto in productos %}
+    <div class="product-card">
+        <h3>{{ producto.nombre }}</h3>
+        <p class="price">${{ producto.precio }}</p>
+        <p class="category">{{ producto.categoria }}</p>
+        <a href="{% url 'productos:detalle' producto.id %}">Ver detalle</a>
+    </div>
+{% empty %}
+    <p>No hay productos disponibles.</p>
+{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard E-commerce{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="{% url 'core:home' %}" class="nav-brand">Dashboard E-commerce</a>
+            <div class="nav-links">
+                <a href="{% url 'core:home' %}">Inicio</a>
+                <a href="{% url 'productos:lista' %}">Productos</a>
+                <a href="{% url 'dashboard_app:panel' %}">Dashboard</a>
+                <a href="{% url 'core:about' %}">Acerca de</a>
+                <a href="{% url 'core:contact' %}">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>Dashboard E-commerce &copy; 2024 - Curso de Python</p>
+    </footer>
+</body>
+</html>

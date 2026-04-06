@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Ventas {{ año }} - Dashboard E-commerce{% endblock %}
+
+{% block content %}
+<h1>Ventas {{ año }}</h1>
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="number">${{ total|floatformat:0 }}</div>
+        <div class="label">Total</div>
+    </div>
+    <div class="stat-card">
+        <div class="number">{{ transacciones }}</div>
+        <div class="label">Transacciones</div>
+    </div>
+</div>
+
+<a href="{% url 'dashboard_app:ventas' %}">← Volver a Ventas</a>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Dashboard E-commerce{% endblock %}
+
+{% block content %}
+<h1>{{ titulo }}</h1>
+
+{% if usuario %}
+    <p>Hola, {{ usuario }}! Bienvenido de vuelta.</p>
+{% else %}
+    <p>Hola, visitante!</p>
+{% endif %}
+
+<div class="stats">
+    <div class="stat-card">
+        <div class="number">{{ total_productos }}</div>
+        <div class="label">Productos</div>
+    </div>
+    <div class="stat-card">
+        <div class="number">{{ ventas_hoy }}</div>
+        <div class="label">Ventas hoy</div>
+    </div>
+</div>
+{% endblock %}
