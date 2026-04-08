@@ -14,6 +14,14 @@ class Categoria(models.Model):
         return self.nombre
 
 
+class Etiqueta(models.Model):
+    nombre = models.CharField(max_length=50, unique=True)
+    color = models.CharField(max_length=7, default='#6c757d')
+
+    def __str__(self):
+        return self.nombre
+
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
@@ -25,6 +33,7 @@ class Producto(models.Model):
         related_name='productos'
     )
     imagen_url = models.URLField(blank=True)
+    etiquetas = models.ManyToManyField(Etiqueta, blank=True, related_name='productos')
     activo = models.BooleanField(default=True)
     creado = models.DateTimeField(auto_now_add=True)
     actualizado = models.DateTimeField(auto_now=True)

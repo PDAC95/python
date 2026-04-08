@@ -4,18 +4,21 @@ from .models import Producto, Categoria
 
 
 def lista_productos(request):
-    productos = Producto.objects.filter(activo=True)
+    productos = Producto.objects.filter(activo=True).select_related('categoria').prefetch_related('etiquetas')
     return render(request, 'productos/lista.html', {'productos': productos})
 
 
 def detalle_producto(request, id):
-    producto = get_object_or_404(Producto, id=id)
+    producto = get_object_or_404(
+        Producto.objects.select_related('categoria').prefetch_related('etiquetas'),
+        id=id
+    )
     return render(request, 'productos/detalle.html', {'producto': producto})
 
 
 def productos_por_categoria(request, categoria):
     cat = get_object_or_404(Categoria, nombre__iexact=categoria)
-    productos = Producto.objects.filter(categoria=cat, activo=True)
+    productos = Producto.objects.filter(categoria=cat, activo=True).select_related('categoria').prefetch_related('etiquetas')
     return render(request, 'productos/categoria.html', {
         'categoria': cat.nombre,
         'productos': productos,
